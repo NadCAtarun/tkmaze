@@ -8,6 +8,7 @@ class Cell:
         self.nepoint = Point(sepoint.x, nwpoint.y)
         self.sepoint = sepoint
         self.swpoint = Point(nwpoint.x, sepoint.y)
+        self.center = Point((nwpoint.x + sepoint.x) / 2, (nwpoint.y + sepoint.y) / 2)
         self.walls = {'N': True, 'E': True, 'S': True, 'W': True}
         self.lines = {
             'N': Line(nwpoint, self.nepoint),
@@ -25,3 +26,10 @@ class Cell:
             self.lines['S'].draw(canvas)
         if self.walls['W']:
             self.lines['W'].draw(canvas)
+
+    def draw_move(self, canvas, to_cell, undo=False):
+        color = "red"
+        if undo:
+            color = "gray"
+        line = Line(self.center, to_cell.center)
+        line.draw(canvas, fill_color=color)
