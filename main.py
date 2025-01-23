@@ -1,19 +1,20 @@
-from line import Line
+from cell import Cell
 from point import Point
 from window import Window
 
 if __name__ == "__main__":
     window = Window(800, 600)
     p1 = Point(100, 100)
-    p2 = Point(100, 300)
-    p3 = Point(300, 300)
-    p4 = Point(300, 100)
-    l1 = Line(p1, p2)
-    l2 = Line(p2, p3)
-    l3 = Line(p3, p4)
-    l4 = Line(p4, p1)
-    window.draw_line(l1)
-    window.draw_line(l2)
-    window.draw_line(l3)
-    window.draw_line(l4)
+    p2 = Point(300, 300)
+    p3 = Point(400, 100)
+    p4 = Point(600, 300)
+
+    c1 = Cell(p1, p2)
+    c1.walls["N"] = False
+    c2 = Cell(p3, p4)
+    c2.walls["S"] = False
+
+    c1.draw(window.canvas)
+    c2.draw(window.canvas)
+
     window.wait_for_close()
