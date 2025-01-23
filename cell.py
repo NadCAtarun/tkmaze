@@ -1,15 +1,27 @@
+from line import Line
+from point import Point
+
+
 class Cell:
     def __init__(self, nwpoint, sepoint):
         self.nwpoint = nwpoint
+        self.nepoint = Point(sepoint.x, nwpoint.y)
         self.sepoint = sepoint
+        self.swpoint = Point(nwpoint.x, sepoint.y)
         self.walls = {'N': True, 'E': True, 'S': True, 'W': True}
+        self.lines = {
+            'N': Line(nwpoint, self.nepoint),
+            'E': Line(self.nepoint, sepoint),
+            'S': Line(sepoint, self.swpoint),
+            'W': Line(self.swpoint, nwpoint)
+        }
 
     def draw(self, canvas):
         if self.walls['N']:
-            canvas.create_line(self.nwpoint.x, self.nwpoint.y, self.sepoint.x, self.nwpoint.y)
+            self.lines['N'].draw(canvas)
         if self.walls['E']:
-            canvas.create_line(self.sepoint.x, self.nwpoint.y, self.sepoint.x, self.sepoint.y)
+            self.lines['E'].draw(canvas)
         if self.walls['S']:
-            canvas.create_line(self.nwpoint.x, self.sepoint.y, self.sepoint.x, self.sepoint.y)
+            self.lines['S'].draw(canvas)
         if self.walls['W']:
-            canvas.create_line(self.nwpoint.x, self.nwpoint.y, self.nwpoint.x, self.sepoint.y)
+            self.lines['W'].draw(canvas)
